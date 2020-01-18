@@ -1,2 +1,3 @@
 # docker-nginx-sandbox
-sandbox
+
+My nginx docker image sandbox.
