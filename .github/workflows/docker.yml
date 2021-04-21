@@ -49,3 +49,4 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_ID }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          repository: yano3/nginx-sandbox
