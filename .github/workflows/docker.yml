@@ -15,14 +15,14 @@ jobs:
       - uses: actions-ecosystem/action-regex-match@v2
         id: regex_mainline
         with:
-          text: ${GITHUB_REF/refs\/tags\//}
-          regex: '^\d+.\d*[13579].\d+'
+          text: ${{ env.GITHUB_REF }}
+          regex: '^refs/tags/\d+.\d*[13579].\d+'
 
       - uses: actions-ecosystem/action-regex-match@v2
         id: regex_stable
         with:
-          text: ${GITHUB_REF/refs\/tags\//}
-          regex: '^\d+.\d*[02468].\d+'
+          text: ${{ env.GITHUB_REF }}
+          regex: '^refs/tags/\d+.\d*[02468].\d+'
 
       - name: Docker meta
         id: meta
