@@ -32,8 +32,10 @@ jobs:
             console.log(context.ref)
             if (/^refs\/tags\/\d+.\d*[02468].\d+/.test(context.ref)) {
               console.log('stable')
+              return 'stable'
             } else {
               console.log('mainline')
+              return 'mainline'
             }
 
       - name: Docker meta
@@ -67,20 +69,10 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push
-        if: ${{ steps.regex_mainline.outputs.match != '' }}
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./mainline/Dockerfile
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-
-      - name: Build and push
-        if: ${{ steps.regex_stable.outputs.match != '' }}
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: ./stable/Dockerfile
+          file: ./${{ steps.version.outputs.result }}/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
 
