@@ -12,25 +12,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - uses: actions-ecosystem/action-regex-match@v2
-        id: regex_mainline
-        with:
-          text: ${{ github.ref }}
-          regex: '^refs/tags/\d+.\d*[13579].\d+'
-
-      - uses: actions-ecosystem/action-regex-match@v2
-        id: regex_stable
-        with:
-          text: ${{ github.ref }}
-          regex: '^refs/tags/\d+.\d*[02468].\d+'
-
-      - name: Select version
+      - name: Detect version
         uses: actions/github-script@v4
         id: version
         with:
           result-encoding: string
           script: |
-            console.log(context.ref)
             if (/^refs\/tags\/\d+.\d*[02468].\d+/.test(context.ref)) {
               console.log('stable')
               return 'stable'
@@ -48,8 +35,8 @@ jobs:
             ghcr.io/yano3/nginx-sandbox
           tags: |
             type=ref,event=tag
-            type=raw,value=latest,enable=${{ steps.regex_mainline.outputs.match != '' }}
-            type=raw,value=stable,enable=${{ steps.regex_stable.outputs.match != '' }}
+            type=raw,value=latest,enable=${{ steps.version.outputs.result == 'mainline' }}
+            type=raw,value=stable,enable=${{ steps.version.outputs.result == 'stable' }}
           flavor: |
             latest=false
 
