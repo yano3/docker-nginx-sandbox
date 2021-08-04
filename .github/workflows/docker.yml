@@ -29,7 +29,7 @@ jobs:
         id: version
         with:
           script: |
-            console.log(github.ref)
+            console.log(context.ref)
 
       - name: Docker meta
         id: meta
