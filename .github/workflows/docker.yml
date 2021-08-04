@@ -30,6 +30,11 @@ jobs:
         with:
           script: |
             console.log(context.ref)
+            if (/^refs/tags/\d+.\d*[02468].\d+/.test(context.ref)) {
+              console.log('stable')
+            } else {
+              console.log('mainline')
+            }
 
       - name: Docker meta
         id: meta
