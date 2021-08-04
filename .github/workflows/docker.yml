@@ -28,6 +28,7 @@ jobs:
         uses: actions/github-script@v4
         id: version
         with:
+          result-encoding: string
           script: |
             console.log(context.ref)
             if (/^refs\/tags\/\d+.\d*[02468].\d+/.test(context.ref)) {
