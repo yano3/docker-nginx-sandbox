@@ -24,6 +24,13 @@ jobs:
           text: ${{ github.ref }}
           regex: '^refs/tags/\d+.\d*[02468].\d+'
 
+      - name: Select version
+        uses: actions/github-script@v4
+        id: version
+        with:
+          script: |
+            console.log(github.ref)
+
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v3
