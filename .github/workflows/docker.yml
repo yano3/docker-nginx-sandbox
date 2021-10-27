@@ -12,8 +12,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Detect version
-        uses: actions/github-script@v4
+      - name: Detect nginx version
+        uses: actions/github-script@v5
         id: version
         with:
           result-encoding: string
